@@ -17,8 +17,15 @@ class neuralNetwork:
     def train(self) -> None:
         pass
 
-    def query(self) ->None:
-        pass
+    def query(self, inputs_list) -> numpy.ndarray:
+
+        inputs = numpy.array(inputs_list, ndmin=2).T
+        hidden_inputs = numpy.dot(self.whi, inputs)
+        hidden_outputs = self.activation_function(hidden_inputs)
+        final_inputs = numpy.dot(self.who, hidden_outputs)
+        final_outputs = self.activation_function(final_inputs)
+        return final_outputs
+        
 
 def main():
     input_nodes = 3
@@ -29,6 +36,7 @@ def main():
 
     n = neuralNetwork(input_nodes, hidden_nodes, output_nodes, learning_rate)
 
-    print(n)
+    print(n.query([1.0, 0.5, -1.5]))
+    
 if __name__ == "__main__":
     main()
